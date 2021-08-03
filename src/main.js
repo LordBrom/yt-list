@@ -1,5 +1,3 @@
-//require('dotenv').config();
-
 import Vue from 'vue'
 import App from './App.vue'
 //import { BCard, BButton } from 'bootstrap-vue'
