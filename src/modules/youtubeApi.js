@@ -15,7 +15,6 @@ export default async function getYtVideoListByChannelID(channelID, resultsPerPag
 		name: channelData.data.items[0].snippet.channelTitle,
 		data: channelData.data
 	};
-	//results.channel = channelData.data;
 	var promises = [];
 	videos.forEach(video => {
 		var videoUrl = API_URL + "videos?part=snippet&id=" + video.id.videoId + "&key=" + API_KEY;

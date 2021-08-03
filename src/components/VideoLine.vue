@@ -1,7 +1,7 @@
 <template>
 	<div class="row baseRow">
 		<div class="col-12">
-			<div class="row">
+			<div class="row titleRow">
 				<div class="col-12">
 					<h2>
 						<b-button
@@ -73,11 +73,17 @@
 
 <style scoped>
 	.baseRow {
-		margin-bottom: 25px;
+		margin-bottom: 0.5rem;
+		background-color: #4e4d4e;
+		padding: 0.5rem;
+	}
+
+	.titleRow {
+		color: white;
 	}
 
 	.videoRow {
 		flex-wrap: nowrap;
-		overflow-x: scroll;
+		overflow-x: auto;
 	}
 </style>

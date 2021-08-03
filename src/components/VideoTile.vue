@@ -66,7 +66,8 @@
 </style>
 <style>
 	.card-img-overlay {
+		cursor: pointer;
 		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-		background-color: rgba(160, 160, 160, .5);
+		background-color: rgba(85, 85, 85, .5);
 	}
 </style>

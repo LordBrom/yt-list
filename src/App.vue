@@ -18,12 +18,14 @@
 		},
 		data() {
 			return {
-				ytChannelList: ["UCH-_hzb2ILSCo9ftVSnrCIQ", "UCZ3edpZNi_qmuBG2FIHW5tQ", "UCs4br3aZLU0sOEM-3n0-6xQ", "UC5rUMdCFWPXYs9e8PBLzq5g", "UClhmd2Xe3zrYfuarqV-shKA", "UCNBwxPqzdZeLGv8SPoosjNg","UCgXiTWrFg05fTPfw1YLb5Ug"]
-				//ytChannelList: ["UCH-_hzb2ILSCo9ftVSnrCIQ"]
+				ytChannelList: ["UCH-_hzb2ILSCo9ftVSnrCIQ", "UCs4br3aZLU0sOEM-3n0-6xQ", "UC5rUMdCFWPXYs9e8PBLzq5g","UCgXiTWrFg05fTPfw1YLb5Ug", "UClhmd2Xe3zrYfuarqV-shKA", "UCNBwxPqzdZeLGv8SPoosjNg", "UCZ3edpZNi_qmuBG2FIHW5tQ"]
 			}
 		},
 	}
 </script>
 
 <style>
+	#app {
+		background-color: #1d1d1d;
+	}
 </style>
