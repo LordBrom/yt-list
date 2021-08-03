@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store/index'
 //import { BCard, BButton } from 'bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -11,5 +12,6 @@ Vue.use(BootstrapVue);
 //Vue.component('BButton', BButton);
 
 new Vue({
-  render: h => h(App),
+	render: h => h(App),
+	store
 }).$mount('#app')

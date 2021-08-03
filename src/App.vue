@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<video-line
-			v-for="(video, index) in ytChannelList"
+			v-for="(video, index) in ytChannels"
 			:key="index"
 			:channelID="video"
 		></video-line>
@@ -10,6 +10,7 @@
 
 <script>
 	import VideoLine from '@/components/VideoLine'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		name: 'App',
@@ -18,8 +19,12 @@
 		},
 		data() {
 			return {
-				ytChannelList: ["UCH-_hzb2ILSCo9ftVSnrCIQ", "UCs4br3aZLU0sOEM-3n0-6xQ", "UC5rUMdCFWPXYs9e8PBLzq5g","UCgXiTWrFg05fTPfw1YLb5Ug", "UClhmd2Xe3zrYfuarqV-shKA", "UCNBwxPqzdZeLGv8SPoosjNg", "UCZ3edpZNi_qmuBG2FIHW5tQ"]
 			}
+		},
+		computed: {
+			...mapGetters({
+				'ytChannels': 'getYtChannels'
+			})
 		},
 	}
 </script>
