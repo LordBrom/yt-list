@@ -1,17 +1,19 @@
 <template>
-	<div class="row">
+	<div class="row baseRow">
 		<div class="col-12">
 			<div class="row">
 				<div class="col-12">
-					<b-button
-						@click="loadData()"
-					>
-						reload
-					</b-button>
-					<!--{{channelData.channel}}-->
+					<h2>
+						<b-button
+							@click="loadData()"
+						>
+							reload
+						</b-button>
+						{{ channelName }}
+					</h2>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row videoRow">
 				<video-tile
 					v-for="(video, index) in channelData.videos"
 					:key="index"
@@ -51,6 +53,9 @@
 			}
 		},
 		computed: {
+			channelName: function() {
+				return this.channelData?.channel?.name || ""
+			}
 		},
 		async mounted() {
 			var hourInSeconds = 3600;
@@ -67,5 +72,12 @@
 </script>
 
 <style scoped>
+	.baseRow {
+		margin-bottom: 25px;
+	}
 
+	.videoRow {
+		flex-wrap: nowrap;
+		overflow-x: scroll;
+	}
 </style>

@@ -1,8 +1,11 @@
 <template>
 	<div class="col-auto">
 		<b-card
-			:title="videoData.title"
+			overlay
+			text-variant="white"
 			:img-src="videoData.thumbnail"
+			:title="videoData.title"
+			@click="openLink(videoData.id)"
 		>
 			<b-card-text>
 				{{videoData.publishedAt | timePast}}
@@ -49,12 +52,21 @@
 			}
 		},
 		methods: {
+			openLink: function(videoId) {
+				window.open( `https://www.youtube.com/watch?v=${videoId}`, '_blank')
+			}
 		},
 	}
 </script>
 
 <style scoped>
 	.card {
-		max-width: 500px;
+		max-width: 350px;
+	}
+</style>
+<style>
+	.card-img-overlay {
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		background-color: rgba(160, 160, 160, .5);
 	}
 </style>

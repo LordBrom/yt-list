@@ -12,9 +12,10 @@ export default async function getYtVideoListByChannelID(channelID, resultsPerPag
 	var channelData = await Axios.get(url);
 	var videos = channelData.data.items;
 	results.channel = {
-		name: channelData.data
+		name: channelData.data.items[0].snippet.channelTitle,
+		data: channelData.data
 	};
-	results.channel = channelData.data;
+	//results.channel = channelData.data;
 	var promises = [];
 	videos.forEach(video => {
 		var videoUrl = API_URL + "videos?part=snippet&id=" + video.id.videoId + "&key=" + API_KEY;
