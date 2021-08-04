@@ -1,9 +1,9 @@
 <template>
-	<div id="app">
+	<div id="app" class="container-fluid">
 		<video-line
-			v-for="(video, index) in ytChannels"
-			:key="index"
-			:channelID="video"
+			v-for="(channel) in sortedChannels"
+			:key="channel.channelID"
+			:channelID="channel.channelID"
 		></video-line>
 	</div>
 </template>
@@ -19,13 +19,24 @@
 		},
 		data() {
 			return {
+				channelData: []
 			}
 		},
 		computed: {
 			...mapGetters({
 				'ytChannels': 'getYtChannels'
-			})
+			}),
+			sortedChannels: function() {
+				var newData = [...this.ytChannels];
+				return newData.sort((a,b) => {
+					return (a.sort || 99) - (b.sort || 99);
+				});
+			}
 		},
+		created() {
+		},
+		watch: {
+		}
 	}
 </script>
 

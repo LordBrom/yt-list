@@ -24,10 +24,19 @@ export default async function getYtVideoListByChannelID(channelID, resultsPerPag
 			videoData.id = video.id;
 			videoData.title = video.snippet.title;
 			videoData.description = video.snippet.description;
-			videoData.thumbnail = video.snippet.thumbnails.maxres.url;
 			videoData.channelId = video.snippet.channelId;
 			videoData.channelName = video.snippet.channelTitle;
 			videoData.publishedAt = video.snippet.publishedAt;
+
+			if (video.snippet.thumbnails.maxres) {
+				videoData.thumbnail = video.snippet.thumbnails.maxres.url;
+			} else if (video.snippet.thumbnails.high) {
+				videoData.thumbnail = video.snippet.thumbnails.high.url;
+			} else if (video.snippet.thumbnails.medium) {
+				videoData.thumbnail = video.snippet.thumbnails.medium.url;
+			} else {
+				videoData.thumbnail = video.snippet.thumbnails.default.url;
+			}
 
 			results.videos.push(videoData);
 		}));

@@ -4,6 +4,7 @@ import store from './store/index'
 //import { BCard, BButton } from 'bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 

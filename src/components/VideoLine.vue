@@ -1,7 +1,10 @@
 <template>
 	<div class="row baseRow">
 		<div class="col-12">
-			<div class="row titleRow">
+			<div v-if="isLoading" class="text-center">
+				<b-spinner></b-spinner>
+			</div>
+			<div v-if="!isLoading" class="row titleRow">
 				<div class="col-12">
 					<h2>
 						<b-button
@@ -13,7 +16,7 @@
 					</h2>
 				</div>
 			</div>
-			<div class="row videoRow">
+			<div v-if="!isLoading" class="row videoRow">
 				<video-tile
 					v-for="(video, index) in channelData.videos"
 					:key="index"
@@ -41,14 +44,18 @@
 		data() {
 			return {
 				channelData: {},
+				isLoading: false,
 			}
 		},
 		methods: {
 			loadData: async function() {
+				this.isLoading = true;
 				youtubeApi(this.channelID).then(rsp => {
 					this.channelData = rsp;
 					localStorage.setItem(`channelData_${this.channelID}`, JSON.stringify(rsp));
 					localStorage.setItem(`channelDataSaved_${this.channelID}`, new Date().getTime());
+				}).then(() => {
+					this.isLoading = false;
 				})
 			}
 		},
