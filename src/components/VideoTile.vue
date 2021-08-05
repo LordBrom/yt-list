@@ -1,15 +1,13 @@
 <template>
-	<div class="col-auto">
+	<div class="col-12 col-sm-6 col-xl mb-3">
 		<b-card
 			overlay
 			text-variant="white"
 			:img-src="videoData.thumbnail"
-			:title="videoData.title"
 			@click="openLink(videoData.id)"
+			:title="videoData.title"
+			:sub-title="timePast(videoData.publishedAt)"
 		>
-			<b-card-text>
-				{{videoData.publishedAt | timePast}}
-			</b-card-text>
 		</b-card>
 	</div>
 </template>
@@ -26,6 +24,11 @@
 			}
 		},
 		filters: {
+		},
+		methods: {
+			openLink: function(videoId) {
+				window.open( `https://www.youtube.com/watch?v=${videoId}`, '_blank')
+			},
 			timePast: function(dateStr) {
 				var now = new Date();
 				var date = new Date(dateStr);
@@ -51,23 +54,23 @@
 				return result;
 			}
 		},
-		methods: {
-			openLink: function(videoId) {
-				window.open( `https://www.youtube.com/watch?v=${videoId}`, '_blank')
-			}
-		},
 	}
 </script>
 
-<style scoped>
-	.card {
-		max-width: 350px;
-	}
-</style>
 <style>
 	.card-img-overlay {
 		cursor: pointer;
 		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 		background-color: rgba(85, 85, 85, .5);
+	}
+
+	.card-img-overlay .card-title {
+		max-height: 50px;
+		overflow: hidden;
+	}
+	@media (min-width: 1200px) {
+		.col-xl {
+			flex: 1 0 0% !important;
+		}
 	}
 </style>

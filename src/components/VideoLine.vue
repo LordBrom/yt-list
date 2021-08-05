@@ -4,7 +4,7 @@
 			<div v-if="isLoading" class="text-center">
 				<b-spinner></b-spinner>
 			</div>
-			<div v-if="!isLoading" class="row titleRow">
+			<div v-if="!isLoading" class="row titleRow" @click="hideVideos = !hideVideos">
 				<div class="col-12">
 					<h2>
 						<b-button
@@ -16,7 +16,7 @@
 					</h2>
 				</div>
 			</div>
-			<div v-if="!isLoading" class="row videoRow">
+			<div v-if="!isLoading && !hideVideos" class="row videoRow">
 				<video-tile
 					v-for="(video, index) in channelData.videos"
 					:key="index"
@@ -45,6 +45,7 @@
 			return {
 				channelData: {},
 				isLoading: false,
+				hideVideos: false,
 			}
 		},
 		methods: {
@@ -82,7 +83,7 @@
 	.baseRow {
 		margin-bottom: 0.5rem;
 		background-color: #4e4d4e;
-		padding: 0.5rem;
+		padding: 0.5rem 0;
 	}
 
 	.titleRow {
@@ -90,7 +91,7 @@
 	}
 
 	.videoRow {
-		flex-wrap: nowrap;
-		overflow-x: auto;
+		/*flex-wrap: nowrap;
+		overflow-x: auto;*/
 	}
 </style>
