@@ -66,11 +66,11 @@
 			}
 		},
 		async mounted() {
-			var hourInSeconds = 3600;
+			var hourInMilliseconds = 3600000;
 			var savedChannelData = JSON.parse(localStorage.getItem(`channelData_${this.channelID}`));
-			var lastSavedTime = localStorage.getItem(`channelDataSaved_${this.channelID}`);
+			var lastSavedTime = parseFloat(localStorage.getItem(`channelDataSaved_${this.channelID}`));
 			var nowTime = new Date().getTime();
-			if (!savedChannelData || nowTime > (lastSavedTime + hourInSeconds)){
+			if (!savedChannelData || nowTime > (lastSavedTime + hourInMilliseconds)){
 				await this.loadData();
 			} else {
 				this.channelData = savedChannelData;
