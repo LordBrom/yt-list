@@ -33,7 +33,7 @@
 		},
 		data() {
 			return {
-				fields: ['sort','name','channelID','remove']
+				fields: ['name','remove']
 			}
 		},
 		methods: {
@@ -44,7 +44,9 @@
 				'removeYtChannel':"removeYtChannel"
 			}),
 			handleRemoveChannel(channelIndex) {
-				this.removeYtChannel(channelIndex);
+				if (confirm("Are you sure you want to remove this channel?")) {
+					this.removeYtChannel(channelIndex);
+				}
 			}
 		},
 		computed: {
