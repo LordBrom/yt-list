@@ -17,10 +17,7 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 		videos: []
 	};
 	var url = `${API_URL}search?part=snippet&order=date&channelId=${channelID}&maxResults=${resultsPerPage}&key=${API_KEY}`;
-
-	var promises = [];
-
-	await Axios.get(url).then(rspChannel => {
+	await Axios.get(url).then(async rspChannel => {
 		var videoList = "";
 		var isFirst = true;
 		rspChannel.data.items.forEach(video => {
@@ -30,10 +27,8 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 			isFirst = false;
 			videoList += video.id.videoId;
 		})
-		console.log("videoList", videoList);
 		var videoUrl = `${API_URL}videos?part=snippet&id=${videoList}&key=${API_KEY}`;
-		promises.push(Axios.get(videoUrl).then(rspVideo => {
-			console.log(rspVideo);
+		await Axios.get(videoUrl).then(rspVideo => {
 			rspVideo.data.items.forEach(video => {
 				var videoData = {};
 				videoData.id = video.id;
@@ -53,9 +48,8 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 
 				results.videos.push(videoData);
 			})
-		}));
+		});
 	});
-	await Promise.all(promises);
 	results.videos.sort((a, b) => {
 		return new Date(b.publishedAt) - new Date(a.publishedAt);
 	})
