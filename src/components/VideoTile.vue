@@ -4,9 +4,9 @@
 			overlay
 			text-variant="white"
 			:img-src="videoData.thumbnail"
-			@click="openLink(videoData.id)"
 			:title="videoData.title"
 			:sub-title="timePast(videoData.publishedAt)"
+			@click="openLink(videoData.id)"
 		>
 		</b-card>
 	</div>
