@@ -14,6 +14,12 @@
 			</b-collapse>
 		</b-navbar>-->
 
+		<fab
+			position="top-right"
+			main-icon="settings"
+			@click.native="toggleManager"
+		></fab>
+
 		<div class="container-fluid">
 			<div class="row">
 
@@ -21,7 +27,7 @@
 					<video-line
 						v-for="(channel) in sortedChannels"
 						:key="channel.channelID"
-						:channelID="channel.channelID"
+						:channel="channel"
 					></video-line>
 				</div>
 
@@ -38,6 +44,7 @@
 <script>
 	import VideoLine from '@/components/VideoLine'
 	import Manager from '@/components/Manager'
+	import Fab from 'vue-fab'
 	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
@@ -45,6 +52,7 @@
 		components: {
 			VideoLine,
 			Manager,
+			Fab,
 		},
 		data() {
 			return {
@@ -57,6 +65,9 @@
 			...mapActions({
 				'loadYtChannels': 'loadYtChannels'
 			}),
+			toggleManager: function () {
+				this.showManager = !this.showManager;
+			}
 		},
 		computed: {
 			...mapGetters({
@@ -78,6 +89,9 @@
 </script>
 
 <style>
+	@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css';
+	@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
 	#app {
 		background-color: #1d1d1d;
 	}

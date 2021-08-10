@@ -34,6 +34,13 @@ export default new Vuex.Store({
 			state.commit('setYtChannels', newList);
 			localStorage.setItem(`channelData`, JSON.stringify(newList));
 		},
+		removeYtChannel: function(state, indexToRemove) {
+			let currentList = [...state.getters.getYtChannels];
+			currentList.splice(indexToRemove, 1);
+			const newList = [...currentList];
+			state.commit('setYtChannels', newList);
+			localStorage.setItem(`channelData`, JSON.stringify(newList));
+		},
 		loadYtChannels: function(state) {
 			const loadedList = JSON.parse(localStorage.getItem(`channelData`) || "[]");
 			state.commit('setYtChannels', loadedList);

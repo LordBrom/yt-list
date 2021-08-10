@@ -16,38 +16,43 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 	var results = {
 		videos: []
 	};
-	var url = API_URL + "search?part=snippet&order=date&channelId=" + channelID + "&maxResults=" + resultsPerPage + "&key=" + API_KEY;
+	var url = `${API_URL}search?part=snippet&order=date&channelId=${channelID}&maxResults=${resultsPerPage}&key=${API_KEY}`;
 
-	var channelData = await Axios.get(url);
-	var videos = channelData.data.items;
-	results.channel = {
-		name: channelData.data.items[0].snippet.channelTitle,
-		data: channelData.data
-	};
 	var promises = [];
-	videos.forEach(video => {
-		var videoUrl = API_URL + "videos?part=snippet&id=" + video.id.videoId + "&key=" + API_KEY;
-		promises.push(Axios.get(videoUrl).then(rsp => {
-			var videoData = {};
-			var video = rsp.data.items[0];
-			videoData.id = video.id;
-			videoData.title = video.snippet.title;
-			videoData.description = video.snippet.description;
-			videoData.channelId = video.snippet.channelId;
-			videoData.channelName = video.snippet.channelTitle;
-			videoData.publishedAt = video.snippet.publishedAt;
 
-			if (video.snippet.thumbnails.maxres) {
-				videoData.thumbnail = video.snippet.thumbnails.maxres.url;
-			} else if (video.snippet.thumbnails.high) {
-				videoData.thumbnail = video.snippet.thumbnails.high.url;
-			} else if (video.snippet.thumbnails.medium) {
-				videoData.thumbnail = video.snippet.thumbnails.medium.url;
-			} else {
-				videoData.thumbnail = video.snippet.thumbnails.default.url;
+	await Axios.get(url).then(rspChannel => {
+		var videoList = "";
+		var isFirst = true;
+		rspChannel.data.items.forEach(video => {
+			if (!isFirst) {
+				videoList += ",";
 			}
+			isFirst = false;
+			videoList += video.id.videoId;
+		})
+		console.log("videoList", videoList);
+		var videoUrl = `${API_URL}videos?part=snippet&id=${videoList}&key=${API_KEY}`;
+		promises.push(Axios.get(videoUrl).then(rspVideo => {
+			console.log(rspVideo);
+			rspVideo.data.items.forEach(video => {
+				var videoData = {};
+				videoData.id = video.id;
+				videoData.title = video.snippet.title;
+				videoData.description = video.snippet.description;
+				videoData.publishedAt = video.snippet.publishedAt;
 
-			results.videos.push(videoData);
+				if (video.snippet.thumbnails.maxres) {
+					videoData.thumbnail = video.snippet.thumbnails.maxres.url;
+				} else if (video.snippet.thumbnails.high) {
+					videoData.thumbnail = video.snippet.thumbnails.high.url;
+				} else if (video.snippet.thumbnails.medium) {
+					videoData.thumbnail = video.snippet.thumbnails.medium.url;
+				} else {
+					videoData.thumbnail = video.snippet.thumbnails.default.url;
+				}
+
+				results.videos.push(videoData);
+			})
 		}));
 	});
 	await Promise.all(promises);

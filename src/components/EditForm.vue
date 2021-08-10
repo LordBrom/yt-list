@@ -9,9 +9,10 @@
 	>
 		<form ref="form" @submit.stop.prevent="handleSubmit">
 			<b-form-group
-				label="Name"
+				label="Channel ID"
 				label-for="name-input"
 				invalid-feedback="Name is required"
+				description="https://www.youtube.com/channel/<Just this part>"
 			>
 				<b-form-input
 					id="name-input"

@@ -12,7 +12,7 @@
 						>
 							reload
 						</b-button>
-						{{ channelName }}
+						{{ channel.name }}
 					</h2>
 				</div>
 			</div>
@@ -36,8 +36,8 @@
 			VideoTile
 		},
 		props: {
-			channelID: {
-				type: String,
+			channel: {
+				type: Object,
 				required: true
 			}
 		},
@@ -51,24 +51,21 @@
 		methods: {
 			loadData: async function() {
 				this.isLoading = true;
-				getYtVideoListByChannelID(this.channelID).then(rsp => {
+				getYtVideoListByChannelID(this.channel.channelID).then(rsp => {
 					this.channelData = rsp;
-					localStorage.setItem(`channelData_${this.channelID}`, JSON.stringify(rsp));
-					localStorage.setItem(`channelDataSaved_${this.channelID}`, new Date().getTime());
+					localStorage.setItem(`channelData_${this.channel.channelID}`, JSON.stringify(rsp));
+					localStorage.setItem(`channelDataSaved_${this.channel.channelID}`, new Date().getTime());
 				}).then(() => {
 					this.isLoading = false;
 				})
 			}
 		},
 		computed: {
-			channelName: function() {
-				return this.channelData?.channel?.name || ""
-			}
 		},
 		async mounted() {
 			var hourInMilliseconds = 3600000;
-			var savedChannelData = JSON.parse(localStorage.getItem(`channelData_${this.channelID}`));
-			var lastSavedTime = parseFloat(localStorage.getItem(`channelDataSaved_${this.channelID}`));
+			var savedChannelData = JSON.parse(localStorage.getItem(`channelData_${this.channel.channelID}`));
+			var lastSavedTime = parseFloat(localStorage.getItem(`channelDataSaved_${this.channel.channelID}`));
 			var nowTime = new Date().getTime();
 			if (!savedChannelData || nowTime > (lastSavedTime + hourInMilliseconds)){
 				await this.loadData();
