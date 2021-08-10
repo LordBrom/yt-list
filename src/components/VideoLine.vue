@@ -29,7 +29,7 @@
 
 <script>
 	import VideoTile from '@/components/VideoTile'
-	import youtubeApi from '@/modules/youtubeApi.js'
+	import {getYtVideoListByChannelID} from '@/modules/youtubeApi.js'
 
 	export default {
 		components: {
@@ -51,7 +51,7 @@
 		methods: {
 			loadData: async function() {
 				this.isLoading = true;
-				youtubeApi(this.channelID).then(rsp => {
+				getYtVideoListByChannelID(this.channelID).then(rsp => {
 					this.channelData = rsp;
 					localStorage.setItem(`channelData_${this.channelID}`, JSON.stringify(rsp));
 					localStorage.setItem(`channelDataSaved_${this.channelID}`, new Date().getTime());

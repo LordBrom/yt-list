@@ -3,49 +3,40 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// "Refferencing"
-// https://github.com/SinghDigamber/vuex-state-management-app/blob/master/src/store/modules/users-module.js
-
 export default new Vuex.Store({
 	state: {
-		ytChannels: [{
-			//Yogs main
-			channelID: "UCH-_hzb2ILSCo9ftVSnrCIQ",
-			sort: 1,
-		},{
-			//Duncan
-			channelID: "UCs4br3aZLU0sOEM-3n0-6xQ",
-			sort: 2,
-		},{
-			//Tom
-			channelID: "UC5rUMdCFWPXYs9e8PBLzq5g",
-			sort: 3,
-		},{
-			//Triforce
-			channelID: "UCgXiTWrFg05fTPfw1YLb5Ug",
-			sort: 4,
-		},{
-			//games night
-			channelID: "UClhmd2Xe3zrYfuarqV-shKA",
-			sort: 5,
-		},{
-			//civ
-			channelID: "UCNBwxPqzdZeLGv8SPoosjNg",
-			sort: 6,
-		},{
-			//TDD
-			channelID: "UCZ3edpZNi_qmuBG2FIHW5tQ",
-			sort: 7,
-		},]
+		ytChannels: [
+		],
+		showEditForm: false,
 	},
 	getters: {
-		getYtChannels: state => state.ytChannels
+		getYtChannels: state => state.ytChannels,
+		getShowEditForm: state => state.showEditForm,
 	},
 	mutations: {
+		setYtChannels: function (state, ytChannels) {
+			state.ytChannels = ytChannels;
+		},
+		addYtChannel: function(state, channelData) {
+			state.ytChannels.push(channelData);
+		},
+		setShowEditForm: function(state, visible) {
+			state.showEditForm = visible;
+		},
+		toggleShowEditForm: function(state) {
+			state.showEditForm = !state.showEditForm;
+		},
 	},
 	actions: {
-		addChannel: function() {
-
+		addYtChannel: function(state, newChannelData) {
+			const currentList = [...state.getters.getYtChannels];
+			const newList = [...currentList, newChannelData];
+			state.commit('setYtChannels', newList);
+			localStorage.setItem(`channelData`, JSON.stringify(newList));
+		},
+		loadYtChannels: function(state) {
+			const loadedList = JSON.parse(localStorage.getItem(`channelData`) || "[]");
+			state.commit('setYtChannels', loadedList);
 		}
 	}
 })

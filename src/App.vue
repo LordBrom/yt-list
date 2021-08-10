@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 
-		<b-navbar toggleable="lg" type="dark" variant="dark">
+		<!--<b-navbar toggleable="lg" type="dark" variant="dark">
 			<b-navbar-brand href="#">Nate's Youtube List</b-navbar-brand>
 
 			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -12,17 +12,22 @@
 					<b-nav-item href="#">Manage</b-nav-item>
 				</b-navbar-nav>
 			</b-collapse>
-		</b-navbar>
+		</b-navbar>-->
 
 		<div class="container-fluid">
 			<div class="row">
 
-				<div class="col">
+				<div v-if="!showManager" class="col">
 					<video-line
 						v-for="(channel) in sortedChannels"
 						:key="channel.channelID"
 						:channelID="channel.channelID"
 					></video-line>
+				</div>
+
+				<div v-else class="col">
+					<manager
+					></manager>
 				</div>
 
 			</div>
@@ -32,18 +37,26 @@
 
 <script>
 	import VideoLine from '@/components/VideoLine'
-	import { mapGetters } from 'vuex'
+	import Manager from '@/components/Manager'
+	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		name: 'App',
 		components: {
-			VideoLine
+			VideoLine,
+			Manager,
 		},
 		data() {
 			return {
 				channelData: [],
-				showSideBar: true
+				showSideBar: true,
+				showManager: false,
 			}
+		},
+		methods: {
+			...mapActions({
+				'loadYtChannels': 'loadYtChannels'
+			}),
 		},
 		computed: {
 			...mapGetters({
@@ -57,6 +70,7 @@
 			}
 		},
 		created() {
+			this.loadYtChannels();
 		},
 		watch: {
 		}

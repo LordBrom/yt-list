@@ -3,7 +3,16 @@ import Axios from 'axios'
 const API_KEY = process.env.VUE_APP_API_KEY;
 const API_URL = "https://www.googleapis.com/youtube/v3/";
 
-export default async function getYtVideoListByChannelID(channelID, resultsPerPage = 4) {
+var getChannelData = async function(channelID) {
+	var url = API_URL + "channels?part=snippet&id=" + channelID + "&key=" + API_KEY;
+	var rsp = await Axios.get(url);
+	if (rsp.data.items) {
+		return rsp.data.items[0];
+	}
+	return {};
+}
+
+var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 	var results = {
 		videos: []
 	};
@@ -47,3 +56,5 @@ export default async function getYtVideoListByChannelID(channelID, resultsPerPag
 	})
 	return results;
 }
+
+export { getYtVideoListByChannelID, getChannelData }
