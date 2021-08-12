@@ -1,20 +1,20 @@
 <template>
 	<div class="row baseRow">
 		<div class="col-12">
-			<div v-if="isLoading" class="text-center">
-				<b-spinner></b-spinner>
-			</div>
-			<div v-if="!isLoading" class="row titleRow" @click="hideVideos = !hideVideos">
+			<div class="row titleRow" @click="hideVideos = !hideVideos">
 				<div class="col-12">
 					<h2>
 						<b-button
-							@click="loadData()"
+							@click.stop="loadData()"
 						>
 							reload
 						</b-button>
 						{{ channel.name }}
 					</h2>
 				</div>
+			</div>
+			<div v-if="isLoading" class="text-center">
+				<b-spinner></b-spinner>
 			</div>
 			<div v-if="!isLoading && !hideVideos" class="row videoRow">
 				<video-tile
