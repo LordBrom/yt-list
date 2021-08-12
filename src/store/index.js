@@ -33,7 +33,6 @@ export default new Vuex.Store({
 	actions: {
 		saveChannelData: function (state) {
 			let currentList = [...state.getters.getYtChannels];
-			console.log('Saving', currentList);
 			localStorage.setItem(`channelData`, JSON.stringify(currentList));
 		},
 		addYtChannel: function(state, newChannelData) {
