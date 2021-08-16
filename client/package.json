@@ -1,6 +1,7 @@
 {
 	"name": "yt-list",
 	"version": "0.1.0",
+	"author": "Nate Mills",
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
