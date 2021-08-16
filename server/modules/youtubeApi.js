@@ -1,6 +1,6 @@
-import Axios from 'axios'
+const Axios = require('axios');
 
-const API_KEY = process.env.VUE_APP_API_KEY;
+const API_KEY = process.env.YT_API_KEY;
 const API_URL = "https://www.googleapis.com/youtube/v3/";
 
 var getChannelData = async function(channelID) {
@@ -56,4 +56,4 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 	return results;
 }
 
-export { getYtVideoListByChannelID, getChannelData }
+module.exports = { getYtVideoListByChannelID, getChannelData }
