@@ -29,7 +29,7 @@
 
 <script>
 	import VideoTile from '@/components/VideoTile'
-	import {getYtVideoListByChannelID} from '@/modules/youtubeApi.js'
+	import {getYtVideoListByChannelID} from '@/modules/apiHandler.js'
 
 	export default {
 		components: {

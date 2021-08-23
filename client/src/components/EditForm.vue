@@ -28,7 +28,8 @@
 </template>
 
 <script>
-	import {getChannelData} from '@/modules/youtubeApi.js'
+	//import Axios from 'axios';
+	import {getChannelData} from '@/modules/apiHandler'
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 	export default {
