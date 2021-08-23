@@ -5,7 +5,7 @@ const API_URL = "https://www.googleapis.com/youtube/v3/";
 
 var getChannelData = async function(channelID) {
 	var url = API_URL + "channels?part=snippet&id=" + channelID + "&key=" + API_KEY;
-	var rsp = await Axios.get(url);
+	var rsp = await Axios.get(url).catch(err => {console.log(err)});
 	if (rsp.data.items) {
 		return rsp.data.items[0];
 	}
@@ -48,7 +48,7 @@ var getYtVideoListByChannelID = async function(channelID, resultsPerPage = 4) {
 
 				results.videos.push(videoData);
 			})
-		});
+		}).catch(err => { console.log(err) });
 	});
 	results.videos.sort((a, b) => {
 		return new Date(b.publishedAt) - new Date(a.publishedAt);
