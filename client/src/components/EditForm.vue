@@ -29,7 +29,7 @@
 
 <script>
 	//import Axios from 'axios';
-	import {getChannelData} from '@/modules/apiHandler'
+	import {getChannelData} from '@/api/yt'
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 	export default {

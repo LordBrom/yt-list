@@ -29,7 +29,7 @@
 
 <script>
 	import VideoTile from '@/components/VideoTile'
-	import {getYtVideoListByChannelID} from '@/modules/apiHandler.js'
+	import {getYtVideoListByChannelID} from '@/api/yt'
 
 	export default {
 		components: {

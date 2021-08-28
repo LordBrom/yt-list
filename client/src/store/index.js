@@ -5,15 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
+		user: null,
 		ytChannels: [
 		],
 		showEditForm: false,
 	},
 	getters: {
+		getUser: state => state.user,
 		getYtChannels: state => state.ytChannels,
 		getShowEditForm: state => state.showEditForm,
 	},
 	mutations: {
+		setUser: function(state, user){
+			state.user = user;
+		},
 		setYtChannels: function (state, ytChannels) {
 			state.ytChannels = ytChannels;
 		},
@@ -31,6 +36,9 @@ export default new Vuex.Store({
 		},
 	},
 	actions: {
+		setUser: function (state, user) {
+			state.commit('setUser', user);
+		},
 		saveChannelData: function (state) {
 			let currentList = [...state.getters.getYtChannels];
 			localStorage.setItem(`channelData`, JSON.stringify(currentList));

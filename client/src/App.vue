@@ -1,57 +1,66 @@
 <template>
 	<div id="app">
-		<fab
-			position="top-right"
-			main-icon="settings"
-			@click.native="toggleManager"
-		></fab>
-
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col">
-					<listing v-if="!showManager"></listing>
-					<manager v-else></manager>
+		<nav class="navbar navbar-expand navbar-light fixed-top bg-light">
+			<div class="container">
+				<router-link to="/" class="navbar-brand">Hello</router-link>
+				<div class="collapse navbar-collapse">
+					<ul v-if="!user" class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<router-link to="login" class="nav-link">Login</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="signup" class="nav-link">Sign Up</router-link>
+						</li>
+					</ul>
+					<ul v-else class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
+						</li>
+					</ul>
 				</div>
 			</div>
+		</nav>
+		<div class="container-fluid">
+			<router-view></router-view>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Listing from '@/components/ViewListing'
-	import Manager from '@/components/ViewManager'
-	import Fab from 'vue-fab'
-	import { mapActions } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
+
+	import { getCurrent } from '@/api/user'
 
 	export default {
 		name: 'App',
-		components: {
-			Manager,
-			Listing,
-			Fab,
-		},
 		data() {
 			return {
-				showManager: false,
 			}
 		},
 		methods: {
 			...mapActions({
-				'loadYtChannels': 'loadYtChannels'
+				'setUser': 'setUser'
 			}),
-			toggleManager: function () {
-				this.showManager = !this.showManager;
+			handleLogout() {
+				this.setUser(null);
+				localStorage.removeItem('token');
+				this.$router.push("/login");
 			}
 		},
-		created() {
-			this.loadYtChannels();
+		computed: {
+			...mapGetters({
+				'user': 'getUser'
+			}),
+		},
+		async created() {
+			const rsp = await getCurrent();
+			this.setUser(rsp.data.user);
 		},
 	}
 </script>
 
 <style>
-	/*@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css';
-	@import 'https://fonts.googleapis.com/icon?family=Material+Icons';*/
+	body { padding-top: 56px; }
 
 	#app {
 		background-color: #1d1d1d;

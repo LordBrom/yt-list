@@ -18,12 +18,8 @@ router.post('/channel', auth.required, (req, res, next) => {
 router.post('/videos', auth.required, async (req, res, next) => {
 	const { body: { channelID } } = req;
 
-	console.log(channelID);
-
 	return getYtVideoListByChannelID(channelID)
 	.then((rsp) => {
-		console.log("HERE", rsp);
-		console.log(rsp);
 			return res.json(
 				rsp
 			);

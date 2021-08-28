@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store/index'
+import router from './router'
 //import { BModal, BFormGroup, BFormInport, BButton, BSpinner, BCard, BTable } from 'bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -22,5 +23,6 @@ Vue.use(BootstrapVue);
 
 new Vue({
 	render: h => h(App),
-	store
+	store,
+	router,
 }).$mount('#app')
