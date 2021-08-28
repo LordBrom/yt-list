@@ -4,7 +4,7 @@ const auth = require('../auth');
 
 const { getYtVideoListByChannelID, getChannelData } = require('./../../modules/youtubeApi');
 
-router.post('/channel', auth.optional, (req, res, next) => {
+router.post('/channel', auth.required, (req, res, next) => {
 	const { body: { channelID } } = req;
 
 	return getChannelData(channelID)
@@ -15,7 +15,7 @@ router.post('/channel', auth.optional, (req, res, next) => {
 		}).catch(err => { console.log(err) });
 });
 
-router.post('/videos', auth.optional, async (req, res, next) => {
+router.post('/videos', auth.required, async (req, res, next) => {
 	const { body: { channelID } } = req;
 
 	console.log(channelID);
