@@ -1,12 +1,19 @@
 <template>
 	<div class="row">
-		<div class="offset-3 col-6">
+		<div class="offset-md-3 col-12 col-md-6">
 			<b-card>
 				<form @submit.prevent="handleSubmit">
+					{{ msg }}
 					<legend>Username</legend>
-					<b-input v-model="username" type="text" />
+					<b-input v-model="username" type="text" :state="('email' in errors ? false : null)" />
+					<b-form-invalid-feedback id="input-live-feedback">
+						{{ errors.email }}
+					</b-form-invalid-feedback>
 					<legend>Password</legend>
-					<b-input v-model="password" type="password" />
+					<b-input v-model="password" type="password" :state="('password' in errors ? false : null)" />
+					<b-form-invalid-feedback id="input-live-feedback">
+						{{ errors.password }}
+					</b-form-invalid-feedback>
 					<br />
 					<b-button @click="handleSubmit">Submit</b-button>
 				</form>
@@ -24,6 +31,8 @@
 			return {
 				username: "",
 				password: "",
+				errors: {},
+				msg: null,
 			}
 		},
 		methods: {
@@ -31,16 +40,37 @@
 				'setUser': 'setUser'
 			}),
 			handleSubmit() {
+				this.errors = {};
+				this.msg = null;
+
 				if (this.username.length == 0) {
-					return;
+					this.errors.email = 'is required';
 				}
 				if (this.password.length == 0) {
+					this.errors.password = 'is required';
+				}
+				console.log(Object.keys(this.errors).length);
+				if (Object.keys(this.errors).length !== 0) {
 					return;
 				}
 				login(this.username, this.password).then((rsp) => {
 					this.setUser(rsp.data.user);
 					localStorage.setItem('token', rsp.data.user.token);
 					this.$router.push("/");
+				})
+				.catch(err => {
+					switch (err.response.status) {
+						case 500:
+							this.msg = "Invalid Login"
+							break;
+
+						case 422:
+							this.errors = err.response.data.errors;
+							break;
+
+						default:
+							break;
+					}
 				});
 			}
 		},

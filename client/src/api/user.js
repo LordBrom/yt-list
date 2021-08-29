@@ -23,10 +23,14 @@ var login = function (username, password) {
 }
 
 var getCurrent = async function () {
-	return Axios.get(`${API_URL}current`, {}, {
-		'Authorization': `Token ${localStorage.getItem('token')}`,
-		'Content-Type': `application/json`,
-	});
+	const token = localStorage.getItem('token');
+	if (token !== null) {
+		return Axios.get(`${API_URL}current`, {}, {
+			'Authorization': `Token ${localStorage.getItem('token')}`,
+			'Content-Type': `application/json`,
+		});
+	}
+	return new Promise(() => { return null });
 }
 
 

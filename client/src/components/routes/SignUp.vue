@@ -1,14 +1,24 @@
 <template>
 	<div class="row">
-		<div class="offset-3 col-6">
+		<div class="offset-md-3 col-12 col-md-6">
 			<b-card>
 				<form @submit.prevent="handleSubmit">
+					{{msg}}
 					<legend>Username</legend>
-					<b-input v-model="username" type="text" />
+					<b-input v-model="username" type="text" :state="('email' in errors ? false : null)" />
+					<b-form-invalid-feedback id="input-live-feedback">
+						{{ errors.email }}
+					</b-form-invalid-feedback>
 					<legend>Password</legend>
-					<b-input v-model="password" type="password" />
+					<b-input v-model="password" type="password" :state="('password' in errors ? false : null)" />
+					<b-form-invalid-feedback id="input-live-feedback">
+						{{ errors.password }}
+					</b-form-invalid-feedback>
 					<legend>Confirm</legend>
-					<b-input v-model="confirm" type="password" />
+					<b-input v-model="confirm" type="password" :state="('confirm' in errors ? false : null)" />
+					<b-form-invalid-feedback id="input-live-feedback">
+						{{ errors.confirm }}
+					</b-form-invalid-feedback>
 					<br />
 					<b-button @click="handleSubmit">Submit</b-button>
 				</form>
@@ -28,6 +38,8 @@
 				username: "",
 				password: "",
 				confirm: "",
+				errors: {},
+				msg: null,
 			}
 		},
 		methods: {
@@ -35,22 +47,43 @@
 				'setUser': 'setUser'
 			}),
 			handleSubmit() {
+				this.errors = {};
+				this.msg = null;
+
 				if (this.username.length == 0) {
-					return;
+					this.errors.email = 'is required';
 				}
 				if (this.password.length == 0) {
-					return;
+					this.errors.password = 'is required';
 				}
 				if (this.confirm.length == 0) {
-					return;
+					this.errors.confirm = 'is required';
 				}
 				if (this.password !== this.confirm) {
+					this.errors.confirm = 'doesn\'t match';
+				}
+				if (Object.keys(this.errors).length !== 0) {
 					return;
 				}
-				signUp(this.username, this.password).then((rsp) => {
+				signUp(this.username, this.password)
+				.then((rsp) => {
 					this.setUser(rsp.data.user);
 					localStorage.setItem('token', rsp.data.user.token);
 					this.$router.push("/");
+				})
+				.catch(err => {
+					switch (err.response.status) {
+						case 500:
+							this.msg = "Somthin fucked up"
+							break;
+
+						case 422:
+							this.errors = err.response.data.errors;
+							break;
+
+						default:
+							break;
+					}
 				});
 			}
 		},
