@@ -8,7 +8,7 @@ const UsersSchema = new Schema({
 	email: String,
 	hash: String,
 	salt: String,
-	Channels: Array
+	channels: Array
 });
 
 UsersSchema.methods.setPassword = function (password) {
@@ -38,6 +38,12 @@ UsersSchema.methods.toAuthJSON = function () {
 		_id: this._id,
 		email: this.email,
 		token: this.generateJWT(),
+	};
+};
+
+UsersSchema.methods.toChannelsJSON = function () {
+	return {
+		channels: this.channels,
 	};
 };
 

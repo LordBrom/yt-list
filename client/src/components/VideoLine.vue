@@ -52,7 +52,7 @@
 			loadData: async function() {
 				this.isLoading = true;
 				getYtVideoListByChannelID(this.channel.channelID).then(rsp => {
-					this.channelData = rsp;
+					this.channelData = rsp.data;
 					localStorage.setItem(`channelData_${this.channel.channelID}`, JSON.stringify(rsp));
 					localStorage.setItem(`channelDataSaved_${this.channel.channelID}`, new Date().getTime());
 				}).then(() => {

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { getUserChannels } from '@/api/yt'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -52,10 +54,11 @@ export default new Vuex.Store({
 			let currentList = [...state.getters.getYtChannels];
 			localStorage.setItem(`channelData`, JSON.stringify(currentList));
 		},
-		loadYtChannels: function (state) {
-			console.log(localStorage.getItem(`channelData`));
-			const loadedList = JSON.parse(localStorage.getItem(`channelData`) || "[]");
-			state.commit('setYtChannels', loadedList);
+		loadYtChannels: async function (state) {
+			await getUserChannels().then((rsp) => {
+				const loadedList = rsp.data.channels;
+				state.commit('setYtChannels', loadedList);
+			});
 		},
 		addYtChannel: function(state, newChannelData) {
 			const currentList = [...state.getters.getYtChannels];
