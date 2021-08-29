@@ -45,6 +45,7 @@ router.get('/channels', auth.required, async (req, res, next) => {
 
 router.post('/channels', auth.required, async (req, res, next) => {
 	const { payload: { id } } = req;
+	const { body: { channels } } = req;
 
 	return Users.findById(id)
 		.then((user) => {
@@ -52,7 +53,9 @@ router.post('/channels', auth.required, async (req, res, next) => {
 				return res.sendStatus(400);
 			}
 
-			return res.json( user.tochannelsJSON() );
+			user.setChannels(channels);
+			return user.save()
+				.then(() => res.json({ user: user.toChannelsJSON() }));
 		});
 });
 

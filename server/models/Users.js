@@ -47,4 +47,8 @@ UsersSchema.methods.toChannelsJSON = function () {
 	};
 };
 
+UsersSchema.methods.setChannels = function (channels) {
+	this.channels = channels;
+};
+
 mongoose.model('Users', UsersSchema);

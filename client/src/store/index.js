@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { getUserChannels } from '@/api/yt'
+import { getUserChannels, saveUserChannels } from '@/api/yt'
 
 Vue.use(Vuex)
 
@@ -48,10 +48,13 @@ export default new Vuex.Store({
 	actions: {
 		setUser: function (state, user) {
 			state.commit('setUser', user);
+			localStorage.setItem('token', user.token);
+			state.dispatch('loadYtChannels');
 		},
 
 		saveChannelData: function (state) {
 			let currentList = [...state.getters.getYtChannels];
+			saveUserChannels(currentList);
 			localStorage.setItem(`channelData`, JSON.stringify(currentList));
 		},
 		loadYtChannels: async function (state) {
@@ -89,6 +92,9 @@ export default new Vuex.Store({
 				});
 			});
 			state.dispatch('saveChannelData');
+		},
+		clearYtChannels: function(state) {
+			state.commit('setYtChannels', []);
 		},
 
 		toggleShowManager: function (state) {

@@ -45,9 +45,11 @@
 				'setUser': 'setUser',
 				'toggleShowManager': 'toggleShowManager',
 				'loadYtChannels': 'loadYtChannels',
+				'clearYtChannels': 'clearYtChannels',
 			}),
 			handleLogout() {
 				this.setUser(null);
+				this.clearYtChannels();
 				localStorage.removeItem('token');
 				this.$router.push("/login");
 			}

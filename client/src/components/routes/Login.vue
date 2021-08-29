@@ -4,7 +4,7 @@
 			<b-card>
 				<form @submit.prevent="handleSubmit">
 					<h1>Login</h1>
-					{{ msg }}
+					<span style="color: red">{{ msg }}</span>
 					<legend>Username</legend>
 					<b-input v-model="username" type="text" :state="('email' in errors ? false : null)" />
 					<b-form-invalid-feedback id="input-live-feedback">
@@ -55,7 +55,6 @@
 				}
 				login(this.username, this.password).then((rsp) => {
 					this.setUser(rsp.data.user);
-					localStorage.setItem('token', rsp.data.user.token);
 					this.$router.push("/");
 				})
 				.catch(err => {

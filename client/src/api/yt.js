@@ -35,4 +35,15 @@ var getUserChannels = function () {
 	});
 }
 
-export { getYtVideoListByChannelID, getChannelData, getUserChannels }
+var saveUserChannels = function (channelData) {
+	return Axios.post(`${API_URL}channels`, {
+		channels: channelData
+	},{
+		headers: {
+			'Authorization': `Token ${localStorage.getItem('token')}`,
+			'Content-Type': `application/json`,
+		}
+	});
+}
+
+export { getYtVideoListByChannelID, getChannelData, getUserChannels, saveUserChannels }

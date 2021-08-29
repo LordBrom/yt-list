@@ -69,7 +69,6 @@
 				signUp(this.username, this.password)
 				.then((rsp) => {
 					this.setUser(rsp.data.user);
-					localStorage.setItem('token', rsp.data.user.token);
 					this.$router.push("/");
 				})
 				.catch(err => {
