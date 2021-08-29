@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<nav class="navbar navbar-expand navbar-light fixed-top bg-light">
-			<div class="container">
+			<div class="container-fluid">
 				<router-link to="/" class="navbar-brand">Hello</router-link>
 				<div class="collapse navbar-collapse">
 					<ul v-if="!user" class="navbar-nav ml-auto">
@@ -13,6 +13,9 @@
 						</li>
 					</ul>
 					<ul v-else class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a href="javascript:void(0);" @click="toggleShowManager" class="nav-link">Manage</a>
+						</li>
 						<li class="nav-item">
 							<a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
 						</li>
@@ -39,7 +42,9 @@
 		},
 		methods: {
 			...mapActions({
-				'setUser': 'setUser'
+				'setUser': 'setUser',
+				'toggleShowManager': 'toggleShowManager',
+				'loadYtChannels': 'loadYtChannels',
 			}),
 			handleLogout() {
 				this.setUser(null);
@@ -54,7 +59,10 @@
 		},
 		async created() {
 			const rsp = await getCurrent();
-			this.setUser(rsp.data.user);
+			await this.setUser(rsp.data.user);
+			if (this.user) {
+				this.loadYtChannels();
+			}
 		},
 	}
 </script>

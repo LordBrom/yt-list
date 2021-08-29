@@ -6,19 +6,26 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
 		user: null,
+
 		ytChannels: [
 		],
+
 		showEditForm: false,
+		showManager: false,
 	},
 	getters: {
 		getUser: state => state.user,
+
 		getYtChannels: state => state.ytChannels,
+
 		getShowEditForm: state => state.showEditForm,
+		getShowManager: state => state.showManager,
 	},
 	mutations: {
 		setUser: function(state, user){
 			state.user = user;
 		},
+
 		setYtChannels: function (state, ytChannels) {
 			state.ytChannels = ytChannels;
 		},
@@ -28,26 +35,33 @@ export default new Vuex.Store({
 		addYtChannel: function(state, channelData) {
 			state.ytChannels.push(channelData);
 		},
+
 		setShowEditForm: function(state, visible) {
 			state.showEditForm = visible;
 		},
-		toggleShowEditForm: function(state) {
-			state.showEditForm = !state.showEditForm;
+		toggleShowManager: function(state) {
+			state.showManager = !state.showManager;
 		},
 	},
 	actions: {
 		setUser: function (state, user) {
 			state.commit('setUser', user);
 		},
+
 		saveChannelData: function (state) {
 			let currentList = [...state.getters.getYtChannels];
 			localStorage.setItem(`channelData`, JSON.stringify(currentList));
+		},
+		loadYtChannels: function (state) {
+			console.log(localStorage.getItem(`channelData`));
+			const loadedList = JSON.parse(localStorage.getItem(`channelData`) || "[]");
+			state.commit('setYtChannels', loadedList);
 		},
 		addYtChannel: function(state, newChannelData) {
 			const currentList = [...state.getters.getYtChannels];
 			const newList = [...currentList, newChannelData];
 			state.commit('setYtChannels', newList);
-			localStorage.setItem(`channelData`, JSON.stringify(newList));
+			state.dispatch('saveChannelData');
 		},
 		removeYtChannel: function(state, indexToRemove) {
 			let currentList = [...state.getters.getYtChannels];
@@ -55,10 +69,6 @@ export default new Vuex.Store({
 			const newList = [...currentList];
 			state.commit('setYtChannels', newList);
 			state.dispatch('saveChannelData');
-		},
-		loadYtChannels: function(state) {
-			const loadedList = JSON.parse(localStorage.getItem(`channelData`) || "[]");
-			state.commit('setYtChannels', loadedList);
 		},
 		setYtChannelOrder: function (state, newOrder) {
 			let currentList = [...state.getters.getYtChannels];
@@ -76,6 +86,10 @@ export default new Vuex.Store({
 				});
 			});
 			state.dispatch('saveChannelData');
-		}
+		},
+
+		toggleShowManager: function (state) {
+			state.commit('toggleShowManager');
+		},
 	}
 })

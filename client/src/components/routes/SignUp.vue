@@ -1,8 +1,9 @@
 <template>
 	<div class="row">
-		<div class="offset-md-3 col-12 col-md-6">
+		<div class="offset-md-3 col-12 col-md-6 mt-5 mb-5">
 			<b-card>
 				<form @submit.prevent="handleSubmit">
+					<h1>Sign Up</h1>
 					{{msg}}
 					<legend>Username</legend>
 					<b-input v-model="username" type="text" :state="('email' in errors ? false : null)" />
