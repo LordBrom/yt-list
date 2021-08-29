@@ -33,6 +33,7 @@
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 	export default {
+		name: 'EditForm',
 		data() {
 			return {
 				formData: {

@@ -15,15 +15,12 @@
 
 <script>
 	export default {
-		components: {
-		},
+		name: 'VideoTile',
 		props: {
 			videoData: {
 				type: Object,
 				required: true
 			}
-		},
-		filters: {
 		},
 		methods: {
 			openLink: function(videoId) {

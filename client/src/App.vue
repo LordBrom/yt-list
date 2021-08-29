@@ -36,21 +36,14 @@
 
 	export default {
 		name: 'App',
-		data() {
-			return {
-			}
-		},
 		methods: {
 			...mapActions({
 				'setUser': 'setUser',
+				'clearUser': 'clearUser',
 				'toggleShowManager': 'toggleShowManager',
-				'loadYtChannels': 'loadYtChannels',
-				'clearYtChannels': 'clearYtChannels',
 			}),
-			handleLogout() {
-				this.setUser(null);
-				this.clearYtChannels();
-				localStorage.removeItem('token');
+			async handleLogout() {
+				await this.clearUser();
 				this.$router.push("/login");
 			}
 		},
@@ -60,11 +53,10 @@
 			}),
 		},
 		async created() {
-			const rsp = await getCurrent();
-			await this.setUser(rsp.data.user);
-			if (this.user) {
-				this.loadYtChannels();
-			}
+			await getCurrent().then(async (rsp) => {
+				const user = rsp.data.user;
+				await this.setUser(user);
+			});
 		},
 	}
 </script>

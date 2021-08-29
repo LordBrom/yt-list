@@ -13,7 +13,7 @@
 	import { mapGetters } from 'vuex'
 
 	export default {
-		name: 'App',
+		name: 'ViewListing',
 		components: {
 			VideoLine,
 		},

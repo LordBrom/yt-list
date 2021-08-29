@@ -51,6 +51,11 @@ export default new Vuex.Store({
 			localStorage.setItem('token', user.token);
 			state.dispatch('loadYtChannels');
 		},
+		clearUser: function (state) {
+			state.commit('setUser', null);
+			localStorage.removeItem('token');
+			state.dispatch('clearYtChannels');
+		},
 
 		saveChannelData: function (state) {
 			let currentList = [...state.getters.getYtChannels];

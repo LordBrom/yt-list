@@ -37,6 +37,7 @@
 	import EditForm from '@/components/EditForm'
 
 	export default {
+		name: 'ViewManager',
 		components: {
 			EditForm
 		},

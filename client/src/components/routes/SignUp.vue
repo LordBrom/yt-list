@@ -34,6 +34,7 @@
 	import { signUp } from '@/api/user'
 
 	export default {
+		name: 'SignUp',
 		data() {
 			return {
 				username: "",
