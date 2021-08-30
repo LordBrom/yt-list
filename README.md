@@ -4,4 +4,4 @@ I didn't want to figure out the, potentially ever changing, interface of YouTube
 
 A YouTube API key is needed in the .env file
 
-Next step is to include some sort of login.
+Next step is to do a lot of clean up and qol features.
