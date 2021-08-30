@@ -1,96 +1,68 @@
 <template>
 	<div id="app">
-
-		<!--<b-navbar toggleable="lg" type="dark" variant="dark">
-			<b-navbar-brand href="#">Nate's Youtube List</b-navbar-brand>
-
-			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-			<b-collapse id="nav-collapse" is-nav>
-				<b-navbar-nav>
-					<b-nav-item href="#">Home</b-nav-item>
-					<b-nav-item href="#">Manage</b-nav-item>
-				</b-navbar-nav>
-			</b-collapse>
-		</b-navbar>-->
-
-		<fab
-			position="top-right"
-			main-icon="settings"
-			@click.native="toggleManager"
-		></fab>
-
-		<div class="container-fluid">
-			<div class="row">
-
-				<div v-if="!showManager" class="col">
-					<video-line
-						v-for="(channel) in sortedChannels"
-						:key="channel.channelID"
-						:channel="channel"
-					></video-line>
+		<nav class="navbar navbar-expand navbar-light fixed-top bg-light">
+			<div class="container-fluid">
+				<router-link to="/" class="navbar-brand">Hello</router-link>
+				<div class="collapse navbar-collapse">
+					<ul v-if="!user" class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<router-link to="login" class="nav-link">Login</router-link>
+						</li>
+						<li class="nav-item">
+							<router-link to="signup" class="nav-link">Sign Up</router-link>
+						</li>
+					</ul>
+					<ul v-else class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a href="javascript:void(0);" @click="toggleShowManager" class="nav-link">Manage</a>
+						</li>
+						<li class="nav-item">
+							<a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
+						</li>
+					</ul>
 				</div>
-
-				<div v-else class="col">
-					<manager
-					></manager>
-				</div>
-
 			</div>
+		</nav>
+		<div class="container-fluid">
+			<router-view></router-view>
 		</div>
 	</div>
 </template>
 
 <script>
-	import VideoLine from '@/components/VideoLine'
-	import Manager from '@/components/Manager'
-	import Fab from 'vue-fab'
 	import { mapGetters, mapActions } from 'vuex'
+
+	import { getCurrent } from '@/api/user'
 
 	export default {
 		name: 'App',
-		components: {
-			VideoLine,
-			Manager,
-			Fab,
-		},
-		data() {
-			return {
-				channelData: [],
-				showSideBar: true,
-				showManager: false,
-			}
-		},
 		methods: {
 			...mapActions({
-				'loadYtChannels': 'loadYtChannels'
+				'setUser': 'setUser',
+				'clearUser': 'clearUser',
+				'toggleShowManager': 'toggleShowManager',
 			}),
-			toggleManager: function () {
-				this.showManager = !this.showManager;
+			async handleLogout() {
+				await this.clearUser();
+				this.$router.push("/login");
 			}
 		},
 		computed: {
 			...mapGetters({
-				'ytChannels': 'getYtChannels'
+				'user': 'getUser'
 			}),
-			sortedChannels: function() {
-				var newData = [...this.ytChannels];
-				return newData.sort((a,b) => {
-					return (a.sort || 99) - (b.sort || 99);
-				});
-			}
 		},
-		created() {
-			this.loadYtChannels();
+		async created() {
+			await getCurrent().then(async (rsp) => {
+				const user = rsp.data.user;
+				await this.setUser(user);
+			});
 		},
-		watch: {
-		}
 	}
 </script>
 
 <style>
-	@import 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css';
-	@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+	body { padding-top: 56px; }
 
 	#app {
 		background-color: #1d1d1d;

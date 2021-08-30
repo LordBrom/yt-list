@@ -29,9 +29,10 @@
 
 <script>
 	import VideoTile from '@/components/VideoTile'
-	import {getYtVideoListByChannelID} from '@/modules/apiHandler.js'
+	import {getYtVideoListByChannelID} from '@/api/yt'
 
 	export default {
+		name: 'VideoLine',
 		components: {
 			VideoTile
 		},
@@ -52,15 +53,13 @@
 			loadData: async function() {
 				this.isLoading = true;
 				getYtVideoListByChannelID(this.channel.channelID).then(rsp => {
-					this.channelData = rsp;
-					localStorage.setItem(`channelData_${this.channel.channelID}`, JSON.stringify(rsp));
+					this.channelData = rsp.data;
+					localStorage.setItem(`channelData_${this.channel.channelID}`, JSON.stringify(rsp.data));
 					localStorage.setItem(`channelDataSaved_${this.channel.channelID}`, new Date().getTime());
 				}).then(() => {
 					this.isLoading = false;
 				})
 			}
-		},
-		computed: {
 		},
 		async mounted() {
 			var hourInMilliseconds = 3600000;
@@ -85,10 +84,5 @@
 
 	.titleRow {
 		color: white;
-	}
-
-	.videoRow {
-		/*flex-wrap: nowrap;
-		overflow-x: auto;*/
 	}
 </style>

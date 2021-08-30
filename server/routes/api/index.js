@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.use('/api', require('./api'));
+router.use('/users', require('./users'));
+router.use('/yt', require('./yt'));
 
 module.exports = router;

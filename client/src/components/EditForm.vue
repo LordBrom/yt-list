@@ -29,10 +29,11 @@
 
 <script>
 	//import Axios from 'axios';
-	import {getChannelData} from '@/modules/apiHandler'
+	import {getChannelData} from '@/api/yt'
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 	export default {
+		name: 'EditForm',
 		data() {
 			return {
 				formData: {
@@ -70,16 +71,18 @@
 				if (this.formData.channelID.length == 0) {
 					return;
 				}
-				var channelData = await getChannelData(this.formData.channelID);
-				if (Object.keys(channelData).length == 0) {
-					return;
-				}
-				this.addYtChannel({
-					channelID: this.formData.channelID,
-					sort: this.ytChannels.length + 1,
-					name: channelData.snippet.title,
-				})
-				this.setShowEditForm(false);
+				await getChannelData(this.formData.channelID).then((rsp) => {
+					const channelData = rsp.data;
+					if (Object.keys(channelData).length == 0) {
+						return;
+					}
+					this.addYtChannel({
+						channelID: this.formData.channelID,
+						sort: this.ytChannels.length + 1,
+						name: channelData.snippet.title,
+					})
+					this.setShowEditForm(false);
+				});
 			},
 			handleCancel: function(bvModalEvt) {
 				bvModalEvt.preventDefault()
