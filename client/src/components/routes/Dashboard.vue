@@ -2,8 +2,7 @@
 	<div class="row">
 		<template v-if="user">
 			<div class="col">
-				<listing v-if="!showManager"></listing>
-				<manager v-else></manager>
+				<listing></listing>
 			</div>
 		</template>
 		<template v-else>
@@ -18,13 +17,11 @@
 
 <script>
 	import Listing from '@/components/ViewListing'
-	import Manager from '@/components/ViewManager'
 	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		name: 'Dashboard',
 		components: {
-			Manager,
 			Listing,
 		},
 		methods: {

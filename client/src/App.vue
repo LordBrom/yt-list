@@ -14,7 +14,7 @@
 					</ul>
 					<ul v-else class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a href="javascript:void(0);" @click="toggleShowManager" class="nav-link">Manage</a>
+							<router-link to="settings" class="nav-link">Settings</router-link>
 						</li>
 						<li class="nav-item">
 							<a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
