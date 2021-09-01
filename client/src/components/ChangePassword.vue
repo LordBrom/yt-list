@@ -39,6 +39,7 @@
 				password: "",
 				confirm: "",
 				errors: {},
+				msg: "",
 			}
 		},
 		methods: {
@@ -63,9 +64,11 @@
 					return;
 				}
 				changePassword(this.oldPassword, this.password)
-				.then((rsp) => {
-					this.setUser(rsp.data.user);
-					this.$router.push("/");
+				.then(() => {
+					this.msg = "Success";
+					this.oldPassword = "";
+					this.password = "";
+					this.confirm = "";
 				})
 				.catch(err => {
 					switch (err.response.status) {
