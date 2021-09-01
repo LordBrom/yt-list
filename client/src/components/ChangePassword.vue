@@ -5,22 +5,30 @@
 				<form @submit.prevent="handleSubmit">
 					<h3>Change Password</h3>
 					{{msg}}
-					<legend>Current Password</legend>
-					<b-input v-model="oldPassword" type="password" :state="('oldPassword' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.oldPassword }}
-					</b-form-invalid-feedback>
-					<legend>New Password</legend>
-					<b-input v-model="password" type="password" :state="('password' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.password }}
-					</b-form-invalid-feedback>
-					<legend>Confirm</legend>
-					<b-input v-model="confirm" type="password" :state="('confirm' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.confirm }}
-					</b-form-invalid-feedback>
-					<br />
+
+					<field
+						label="Confirm"
+						type="password"
+						v-model="oldPassword"
+						:state="('oldPassword' in errors ? false : null)"
+						:invalidFeedback="errors.oldPassword"
+					></field>
+
+					<field
+						label="New Password"
+						type="password"
+						v-model="password"
+						:state="('password' in errors ? false : null)"
+						:invalidFeedback="errors.password"
+					></field>
+
+					<field
+						label="Confirm"
+						type="password"
+						v-model="confirm"
+						:state="('confirm' in errors ? false : null)"
+						:invalidFeedback="errors.confirm"
+					></field>
 					<b-button @click="handleSubmit">Submit</b-button>
 				</form>
 

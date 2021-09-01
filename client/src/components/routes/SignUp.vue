@@ -5,21 +5,30 @@
 				<form @submit.prevent="handleSubmit">
 					<h1>Sign Up</h1>
 					{{msg}}
-					<legend>Username</legend>
-					<b-input v-model="username" type="text" :state="('email' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.email }}
-					</b-form-invalid-feedback>
-					<legend>Password</legend>
-					<b-input v-model="password" type="password" :state="('password' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.password }}
-					</b-form-invalid-feedback>
-					<legend>Confirm</legend>
-					<b-input v-model="confirm" type="password" :state="('confirm' in errors ? false : null)" />
-					<b-form-invalid-feedback id="input-live-feedback">
-						{{ errors.confirm }}
-					</b-form-invalid-feedback>
+
+					<field
+						label="Username"
+						type="text"
+						v-model="username"
+						:state="('email' in errors ? false : null)"
+						:invalidFeedback="errors.email"
+					></field>
+
+					<field
+						label="Password"
+						type="password"
+						v-model="password"
+						:state="('password' in errors ? false : null)"
+						:invalidFeedback="errors.password"
+					></field>
+
+					<field
+						label="Confirm"
+						type="password"
+						v-model="confirm"
+						:state="('confirm' in errors ? false : null)"
+						:invalidFeedback="errors.confirm"
+					></field>
 					<br />
 					<b-button @click="handleSubmit">Submit</b-button>
 				</form>
