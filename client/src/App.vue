@@ -67,4 +67,9 @@
 	#app {
 		background-color: #1d1d1d;
 	}
+
+	.baseRow {
+		margin-bottom: 0.5rem;
+		padding: 0.5rem 0;
+	}
 </style>

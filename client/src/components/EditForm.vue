@@ -28,7 +28,6 @@
 </template>
 
 <script>
-	//import Axios from 'axios';
 	import {getChannelData} from '@/api/yt'
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -57,10 +56,10 @@
 		},
 		methods: {
 			...mapMutations({
-				'setShowEditForm':"setShowEditForm",
+				'setShowEditForm':'setShowEditForm',
 			}),
 			...mapActions({
-				'addYtChannel':"addYtChannel",
+				'addYtChannel':'addYtChannel',
 			}),
 			handleSubmit: function(bvModalEvt) {
 				bvModalEvt.preventDefault()
