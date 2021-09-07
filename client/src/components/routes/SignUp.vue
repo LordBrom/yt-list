@@ -84,7 +84,7 @@
 				.catch(err => {
 					switch (err.response.status) {
 						case 500:
-							this.msg = "Somthin fucked up"
+							this.msg = "Oh No"
 							break;
 
 						case 422:
