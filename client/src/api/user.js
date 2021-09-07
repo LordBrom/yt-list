@@ -22,6 +22,20 @@ var login = function (username, password) {
 	});
 }
 
+var changePassword = function (oldPassword, password) {
+	return Axios.post(`${API_URL}changepassword`, {
+		password: {
+			old: oldPassword,
+			new: password
+		}
+	}, {
+		headers: {
+			'Authorization': `Token ${localStorage.getItem('token')}`,
+			'Content-Type': `application/json`,
+		}
+	});
+}
+
 var getCurrent = async function () {
 	const token = localStorage.getItem('token');
 	if (token !== null) {
@@ -36,4 +50,4 @@ var getCurrent = async function () {
 }
 
 
-export { login, signUp, getCurrent }
+export { login, signUp, changePassword, getCurrent }

@@ -78,6 +78,46 @@ router.post('/login', auth.optional, (req, res, next) => {
 	})(req, res, next);
 });
 
+router.post('/changepassword', auth.required, (req, res, next) => {
+	const { body: { password } } = req;
+	const { payload: { id } } = req;
+
+	if (!password.old) {
+		return res.status(422).json({
+			errors: {
+				oldPassword: 'is required',
+			},
+		});
+	}
+
+	if (!password.new) {
+		return res.status(422).json({
+			errors: {
+				password: 'is required',
+			},
+		});
+	}
+
+	return Users.findById(id)
+		.then((user) => {
+			if (!user) {
+				return res.sendStatus(400);
+			}
+			if (!user.validatePassword(password.old)) {
+				return res.status(422).json({
+					errors: {
+						oldPassword: 'invalid',
+					},
+				});
+			}
+
+			user.setPassword(password.new);
+
+			return user.save()
+				.then(() => res.json({}));
+		});
+});
+
 //GET current route (required, only authenticated users have access)
 router.get('/current', auth.required, (req, res, next) => {
 	const { payload: { id } } = req;

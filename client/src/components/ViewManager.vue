@@ -98,10 +98,6 @@
 </script>
 
 <style scoped>
-	.baseRow {
-		margin-bottom: 0.5rem;
-		padding: 0.5rem 0;
-	}
 	.dragHandle {
 		cursor: ns-resize;
 	}

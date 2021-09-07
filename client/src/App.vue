@@ -14,7 +14,7 @@
 					</ul>
 					<ul v-else class="navbar-nav ml-auto">
 						<li class="nav-item">
-							<a href="javascript:void(0);" @click="toggleShowManager" class="nav-link">Manage</a>
+							<router-link to="settings" class="nav-link">Settings</router-link>
 						</li>
 						<li class="nav-item">
 							<a href="javascript:void(0);" @click="handleLogout" class="nav-link">Logout</a>
@@ -66,5 +66,10 @@
 
 	#app {
 		background-color: #1d1d1d;
+	}
+
+	.baseRow {
+		margin-bottom: 0.5rem;
+		padding: 0.5rem 0;
 	}
 </style>

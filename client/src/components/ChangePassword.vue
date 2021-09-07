@@ -1,21 +1,21 @@
 <template>
-	<div class="row">
-		<div class="offset-md-3 col-12 col-md-6 mt-5 mb-5">
+	<div class="row baseRow">
+		<div class="col-12">
 			<b-card>
 				<form @submit.prevent="handleSubmit">
-					<h1>Sign Up</h1>
+					<h3>Change Password</h3>
 					{{msg}}
 
 					<field
-						label="Username"
-						type="text"
-						v-model="username"
-						:state="('email' in errors ? false : null)"
-						:invalidFeedback="errors.email"
+						label="Confirm"
+						type="password"
+						v-model="oldPassword"
+						:state="('oldPassword' in errors ? false : null)"
+						:invalidFeedback="errors.oldPassword"
 					></field>
 
 					<field
-						label="Password"
+						label="New Password"
 						type="password"
 						v-model="password"
 						:state="('password' in errors ? false : null)"
@@ -29,40 +29,35 @@
 						:state="('confirm' in errors ? false : null)"
 						:invalidFeedback="errors.confirm"
 					></field>
-					<br />
 					<b-button @click="handleSubmit">Submit</b-button>
 				</form>
+
 			</b-card>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-
-	import { signUp } from '@/api/user'
+	import { changePassword } from '@/api/user'
 
 	export default {
-		name: 'SignUp',
 		data() {
 			return {
-				username: "",
+				oldPassword: "",
 				password: "",
 				confirm: "",
 				errors: {},
-				msg: null,
+				msg: "",
 			}
 		},
 		methods: {
-			...mapActions({
-				'setUser': 'setUser'
-			}),
+
 			handleSubmit() {
 				this.errors = {};
 				this.msg = null;
 
-				if (this.username.length == 0) {
-					this.errors.email = 'is required';
+				if (this.oldPassword.length == 0) {
+					this.errors.oldPassword = 'is required';
 				}
 				if (this.password.length == 0) {
 					this.errors.password = 'is required';
@@ -76,10 +71,12 @@
 				if (Object.keys(this.errors).length !== 0) {
 					return;
 				}
-				signUp(this.username, this.password)
-				.then((rsp) => {
-					this.setUser(rsp.data.user);
-					this.$router.push("/");
+				changePassword(this.oldPassword, this.password)
+				.then(() => {
+					this.msg = "Success";
+					this.oldPassword = "";
+					this.password = "";
+					this.confirm = "";
 				})
 				.catch(err => {
 					switch (err.response.status) {
@@ -99,6 +96,3 @@
 		},
 	}
 </script>
-
-<style>
-</style>

@@ -77,9 +77,7 @@
 
 <style scoped>
 	.baseRow {
-		margin-bottom: 0.5rem;
 		background-color: #4e4d4e;
-		padding: 0.5rem 0;
 	}
 
 	.titleRow {

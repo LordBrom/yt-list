@@ -8,27 +8,17 @@
 		@cancel="handleCancel"
 	>
 		<form ref="form" @submit.stop.prevent="handleSubmit">
-			<b-form-group
+			<field
 				label="Channel ID"
-				label-for="name-input"
-				invalid-feedback="Name is required"
+				type="text"
+				v-model="formData.channelID"
 				description="https://www.youtube.com/channel/<Just this part>"
-			>
-				<b-form-input
-					id="name-input"
-					v-model="formData.channelID"
-					required
-				></b-form-input>
-				<!--<b-form-invalid-feedback :state="validation">
-					Your user ID must be 5-12 characters long.
-				</b-form-invalid-feedback>-->
-			</b-form-group>
+			></field>
 		</form>
 	</b-modal>
 </template>
 
 <script>
-	//import Axios from 'axios';
 	import {getChannelData} from '@/api/yt'
 	import { mapGetters, mapMutations, mapActions } from 'vuex'
 
@@ -57,10 +47,10 @@
 		},
 		methods: {
 			...mapMutations({
-				'setShowEditForm':"setShowEditForm",
+				'setShowEditForm':'setShowEditForm',
 			}),
 			...mapActions({
-				'addYtChannel':"addYtChannel",
+				'addYtChannel':'addYtChannel',
 			}),
 			handleSubmit: function(bvModalEvt) {
 				bvModalEvt.preventDefault()

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store/index'
 import router from './router'
+import Field from './components/Field'
 //import { BModal, BFormGroup, BFormInport, BButton, BSpinner, BCard, BTable } from 'bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 //Vue.component('BSpinner', BSpinner);
 //Vue.component('BCard', BCard);
 //Vue.component('BTable', BTable);
+Vue.component('Field', Field);
 
 Vue.use(BootstrapVue);
 
